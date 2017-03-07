@@ -1,6 +1,21 @@
 from maya import cmds
 
 class Gear(object):
+    """
+    This is a Gear object that lets us create and modify a gear
+    to use:
+    import gearClassCreator as gearCreator
+    reload(gearCreator)
+    gear = gearCreator.Gear()
+    gear.createGear()
+    gear.changeTeeth(teeth=10, length=0.3)
+    """
+
+    def __init__(self):
+        #sets up default values
+        self.transform = None
+        self.extrude = None
+        self.constructor = None
 
     def createGear(self, teeth=10, length=0.3):
         spans=teeth*2
