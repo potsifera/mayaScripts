@@ -1,10 +1,12 @@
-#controls how many teeth a gear has
-
-
-
 from maya import cmds
 
 def createGear(teeth=10, length=0.3):
+    """
+    This function will create a gear with the given parameters
+    :param teeth: The number of teeth to create
+    :param length: The length of the teeth
+    :return: A tuple of the transform, constructor and extrude node
+    """
     #teeth are every alternate face, so spans x 2
     spans = teeth*2
 
