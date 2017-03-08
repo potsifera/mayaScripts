@@ -51,7 +51,7 @@ def tween(percentage, obj=None, attrs=None, selection=True):
         previousValue = cmds.getAttr(attrFull, time=previousFrame)
         nextValue = cmds.getAttr(attrFull, time=nextFrame)
 
-        
+
 
         difference = nextValue - previousValue
 
@@ -60,6 +60,24 @@ def tween(percentage, obj=None, attrs=None, selection=True):
 
         cmds.setKeyframe(attrFull, time=currentTime, value=currentValue)
 
+
+
+class TweenWindow(object):
+
+    windowName = "Tweener Window"
+
+    def show(self):
+
+        if cmds.window(self.windowName,query=True, exists = True):
+            cmds.deleteUI(self.windowName)
+
+        cmds.window(self.windowName)
+
+        self.buildUI()
+        cmds.showWindow()
+
+    def buildUI(self):
+            pass
 
 
 
