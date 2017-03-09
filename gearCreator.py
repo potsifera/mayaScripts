@@ -6,6 +6,13 @@ def createGear(teeth=10, length=0.3):
     :param teeth: The number of teeth to create
     :param length: The length of the teeth
     :return: A tuple of the transform, constructor and extrude node
+
+    #ls-sl  how to use:
+    import gearCreator
+    reload(gearCreator)
+    transform, constructor, extrude = gearCreator.createGear()
+    gearCreator.changeTeeth(constructor, extrude, teeth=10)
+
     """
     #teeth are every alternate face, so spans x 2
     spans = teeth*2
