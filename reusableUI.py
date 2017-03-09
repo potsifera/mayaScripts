@@ -79,4 +79,4 @@ class GearUI(BaseWindow):
         cmds.intSlider(self.slider, edit=True, value=10)
         cmds.text(self.label, edit=True, label=10)
 
-        
+
