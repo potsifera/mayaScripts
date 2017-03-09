@@ -43,4 +43,34 @@ class TweenerUI(BaseWindow):
     def reset(self, *args):
         cmds.floatSlider(self.slider, edit=True, value=50)
 
-    
+class GearUI(BaseWindow):
+    windowName = "gearWindow"
+
+    def __init__(self):
+        self.gear = None
+
+    def buildUI(self):
+        column = cmds.columnLayout()
+        cmds.text(label = "use the slider to modify the gear")
+
+        cmds.rowLayout(numberOfColumns=4)
+        self.label = cmds.text(label=10)
+        self.slider = cmds.intSlider(min=5, max=30, value=10, step=1, dragCommand= self.modifyGear)
+        cmds.button(label="Make gear", command=self.makeGear)
+        cmds.button(label="reset", command=self.reset)
+
+        cmds.setParent(column)
+        cmds.button(label="close", command=self.close)
+
+
+    def makeGear(self,*args):
+        print "making gear"
+        teeth =cmds.intSlider(self.slider, query=True, value=True)
+        self.gear = Gear()
+        self.gear.createGear(teeth=teeth)
+
+    def modifyGear(self,teeth):
+        print teeth
+
+    def reset(self, *args):
+        print "reseting"
