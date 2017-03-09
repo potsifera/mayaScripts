@@ -1,3 +1,9 @@
+#how to use
+#import tweenerUI
+#reload(tweenerUI)
+#tweenerUI.tween(10)
+#tweenerUI.TweenWindow().show()
+
 from maya import cmds
 
 def tween(percentage, obj=None, attrs=None, selection=True):
