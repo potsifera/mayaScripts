@@ -64,14 +64,15 @@ class GearUI(BaseWindow):
 
 
     def makeGear(self,*args):
-        
-        print "making gear"
         teeth =cmds.intSlider(self.slider, query=True, value=True)
         self.gear = Gear()
         self.gear.createGear(teeth=teeth)
 
     def modifyGear(self,teeth):
-        self.gear.changeTeeth(teeth=teeth)
+        if self.gear:
+            self.gear.changeTeeth(teeth=teeth)
+
+        cmds.text(self.label, edit=True, label=teeth)
 
     def reset(self, *args):
         print "reseting"
