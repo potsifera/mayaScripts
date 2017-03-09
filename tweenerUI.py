@@ -64,11 +64,11 @@ def tween(percentage, obj=None, attrs=None, selection=True):
 
 class TweenWindow(object):
 
-    windowName = "Tweener Window"
+    windowName = "TweenerWindow"
 
     def show(self):
 
-        if cmds.window(self.windowName,query=True, exists = True):
+        if cmds.window(self.windowName, query=True, exists=True):
             cmds.deleteUI(self.windowName)
 
         cmds.window(self.windowName)
@@ -77,7 +77,18 @@ class TweenWindow(object):
         cmds.showWindow()
 
     def buildUI(self):
-            pass
+        column = cmds.columnLayout()
+        cmds.text(label="use this slider to set the tween amount")
+
+        row = cmds.rowLayout(numberOfColumns=2)
+        self.slider = cmds.floatSlider(min=0, max =100, value=50, step=1, changeCommand=tween)
+        cmds.button(label="reset", command=self.reset)
+
+    def reset(self, *args):
+        print("resetting UI")
+        print args
+        cmds.floatSlider(self.slider, edit=True, value=50)
+
 
 
 
