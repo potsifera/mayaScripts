@@ -16,14 +16,20 @@ class ControllerLibraryUI(QtWidgets.QDialog):
         super(ControllerLibraryUI, self).__init__() #same as QtWidgets.QDialog.__init__(self)
 
         self.setWindowTitle("controllerLibraryUI")
+
+        # the library variable points to an instance of our controller library
         self.library = controllerLibrary.ControllerLibrary()
 
+        #every time we create a new instance, we will automatically build a UI and populate it
         self.buildUI()
         self.populate()
 
     def buildUI(self):
+        """This method builds the UI"""
+        #this is the master layout
         layout = QtWidgets.QVBoxLayout(self)
 
+        #this is the child horizontal widget
         saveWidget = QtWidgets.QWidget()
         saveLayout = QtWidgets.QHBoxLayout(saveWidget)
         layout.addWidget(saveWidget)
@@ -35,8 +41,12 @@ class ControllerLibraryUI(QtWidgets.QDialog):
         saveBtn.clicked.connect(self.save)
         saveLayout.addWidget(saveBtn)
 
+        #these are the params for our thumbnail size
         size = 64
         buffer = 12
+
+        #this will create a grid list widget to display our controller thumbnails
+
         self.listWidget = QtWidgets.QListWidget()
         self.listWidget.setIconSize(QtCore.QSize(size,size))
         self.listWidget.setViewMode(QtWidgets.QListWidget.IconMode)
@@ -44,6 +54,7 @@ class ControllerLibraryUI(QtWidgets.QDialog):
         self.listWidget.setGridSize(QtCore.QSize(size+buffer, size+buffer))
         layout.addWidget(self.listWidget)
 
+        #this is our child widget that holds all the buttons
         btnWidget = QtWidgets.QWidget()
         btnLayout = QtWidgets.QHBoxLayout(btnWidget)
         layout.addWidget(btnWidget)
@@ -63,6 +74,7 @@ class ControllerLibraryUI(QtWidgets.QDialog):
 
 
     def populate(self):
+        """THis clears the listWidget and repopulates it with the library"""
         self.listWidget.clear() #clears before adding
         self.library.find()
         for name, info in self.library.items():
@@ -77,6 +89,7 @@ class ControllerLibraryUI(QtWidgets.QDialog):
 
 
     def load(self):
+        """loads the current selected controller"""
         currentItem = self.listWidget.currentItem()
 
         if not currentItem:
@@ -86,6 +99,7 @@ class ControllerLibraryUI(QtWidgets.QDialog):
 
 
     def save(self):
+        """saves the controller with the given file name"""
         name = self.saveNameField.text()
         if not name.strip():
             cmds.warning("you must give a name")
@@ -96,6 +110,11 @@ class ControllerLibraryUI(QtWidgets.QDialog):
         self.saveNameField.setText('')
 
 def showUI():
+    """
+    shows and returns a handle to the ui
+    Returns:
+            QDialog
+    """
     ui = ControllerLibraryUI()
     ui.show()
 
