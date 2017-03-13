@@ -51,6 +51,7 @@ class ControllerLibrary(dict): #self is a dictionary
 
     def find(self, directory=DIRECTORY):
 
+        self.clear()
         if not os.path.exists(directory):
             return
 
@@ -82,7 +83,7 @@ class ControllerLibrary(dict): #self is a dictionary
 
             self[name] = info
 
-        pprint.pprint(self)
+        #pprint.pprint(self)
 
 
     def load(self,name):
