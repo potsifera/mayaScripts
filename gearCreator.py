@@ -36,13 +36,15 @@ def changeTeeth(constructor, extrude, teeth=10, length=0.3):
     cmds.polyPipe(constructor, edit=True, subdivisionsAxis=spans)
 
     sideFaces = range(spans*2, spans*3, 2)
+    #print cmds.listAttr('polyExtrudeFace1') //lists all the atributes from that polyextrudeface
+    #print cmds.getAttr('polyExtrudeFace1.inputComponents') //lists the extrude faces
     #gets the faceNames
     faceNames = []
     for face in sideFaces:
         faceName = 'f[%s]' % (face)
         faceNames.append(faceName)
 
-    #sets
-    cmds.setAttr('%s.inputComponents' % (extrude), len(faceNames), *faceNames, type="componentList") #duda
+    #sets the correct faces
+    cmds.setAttr('%s.inputComponents' % (extrude), len(faceNames), *faceNames, type="componentList")
     #extrudes
     cmds.polyExtrudeFacet(extrude, edit=True, ltz=length) #edit the polyExtrudeFace1

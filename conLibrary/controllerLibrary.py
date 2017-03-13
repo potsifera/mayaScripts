@@ -17,7 +17,7 @@ def createDirectory(directory=DIRECTORY):
     if not os.path.exists(directory):
         os.mkdir(directory)
 
-class ControllerLibrary(dict):
+class ControllerLibrary(dict): #self is a dictionary
 
     def save(self, name, directory=DIRECTORY):
 
@@ -26,15 +26,19 @@ class ControllerLibrary(dict):
         path = os.path.join(directory,'%s.ma' % name)
 
         cmds.file(rename=path)
-
+        #saves the selected things
         if cmds.ls(selection=True):
             cmds.file(force=True, type='mayaAscii', exportSelected=True)
+        #if nothing is selected it saves everything
         else:
              cmds.file(save=True,type='mayaAscii',force=True)
+
+        self[name]=path #updates the self list of itemes every time we save
 
 
 
     def find(self, directory=DIRECTORY):
+
         if not os.path.exists(directory):
             return
 
@@ -49,6 +53,12 @@ class ControllerLibrary(dict):
             self[name] = path
 
         pprint.pprint(self)
+
+
+    def load(self,name):
+        path=self[name]
+        cmds.file(path, i=True, usingNamespaces=False) #i is for import, usingNamespaces false doesnt load the controller in a separate one
+
 
 
 
