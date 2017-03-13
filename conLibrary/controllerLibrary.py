@@ -20,7 +20,7 @@ def createDirectory(directory=DIRECTORY):
 class ControllerLibrary(dict): #self is a dictionary
 
     #any variables that are not part of the function  will be stored in the info variable
-    def save(self, name, directory=DIRECTORY, **info):
+    def save(self, name, directory=DIRECTORY, screenshot=True, **info):
 
         createDirectory(directory)
 
@@ -37,6 +37,10 @@ class ControllerLibrary(dict): #self is a dictionary
         #if nothing is selected it saves everything
         else:
              cmds.file(save=True,type='mayaAscii',force=True)
+
+
+        if screenshot:
+            info['screenshot'] = self.saveScreenshot(name, directory=directory)
 
         with open(infoFile, 'w') as f: # w means open in write mode
             json.dump(info, f, indent=4)
@@ -68,6 +72,11 @@ class ControllerLibrary(dict): #self is a dictionary
             else:
                 info = {}
 
+            screenshot = '%s.jpeg' % name
+
+            if screenshot in files:
+                info['screenshot'] = os.path.join(directory,name)
+
             info['name'] = name
             info['path'] = path
 
@@ -79,6 +88,16 @@ class ControllerLibrary(dict): #self is a dictionary
     def load(self,name):
         path=self[name]['path']
         cmds.file(path, i=True, usingNamespaces=False) #i is for import, usingNamespaces false doesnt load the controller in a separate one
+
+    def saveScreenshot(self, name, directory=DIRECTORY):
+        path = os.path.join(directory, '%s.jpg' % name)
+        cmds.viewFit()
+        cmds.setAttr('defaultRenderGlobals.imageFormat', 8)
+
+        cmds.playblast(completeFilename=path,forceOverwrite=True,format='image', width=200, height=200, showOrnaments=False,
+                       startTime=1, endTime=1, viewer=False)
+
+        return  path
 
 
 
