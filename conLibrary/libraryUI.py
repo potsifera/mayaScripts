@@ -10,6 +10,10 @@ from PySide2 import QtWidgets, QtCore, QtGui  #from Qt or PySide2
 class ControllerLibraryUI(QtWidgets.QDialog):
     """"
     The ControllerLibraryUI is a dialog that lets us save and import controllers
+    To use:
+    from conLibrary import libraryUI
+    reload(libraryUI)
+    ui = libraryUI.showUI()
     """
 
     def __init__(self):
