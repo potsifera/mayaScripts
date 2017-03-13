@@ -19,11 +19,16 @@ def createDirectory(directory=DIRECTORY):
 
 class ControllerLibrary(dict): #self is a dictionary
 
-    def save(self, name, directory=DIRECTORY):
+    #any variables that are not part of the function  will be stored in the info variable
+    def save(self, name, directory=DIRECTORY, **info):
 
         createDirectory(directory)
 
         path = os.path.join(directory,'%s.ma' % name)
+        infoFile = os.path.join(directory, '%s.json' % name)
+
+        info['name'] = name
+        info['path'] = path
 
         cmds.file(rename=path)
         #saves the selected things
@@ -33,7 +38,10 @@ class ControllerLibrary(dict): #self is a dictionary
         else:
              cmds.file(save=True,type='mayaAscii',force=True)
 
-        self[name]=path #updates the self list of itemes every time we save
+        with open(infoFile, 'w') as f: # w means open in write mode
+            json.dump(info, f, indent=4)
+
+        self[name]=info #updates the self list of itemes every time we save
 
 
 
@@ -50,13 +58,26 @@ class ControllerLibrary(dict): #self is a dictionary
             name, ext = os.path.splitext(ma)
             path = os.path.join(directory, ma)
 
-            self[name] = path
+            infoFile = '%s.json' % name
+            if infoFile in files:
+                infoFile = os.path.join(directory, infoFile)
+
+                with open(infoFile, 'r') as f:
+                    info = json.load(f)
+                    #pprint.pprint(info)
+            else:
+                info = {}
+
+            info['name'] = name
+            info['path'] = path
+
+            self[name] = info
 
         pprint.pprint(self)
 
 
     def load(self,name):
-        path=self[name]
+        path=self[name]['path']
         cmds.file(path, i=True, usingNamespaces=False) #i is for import, usingNamespaces false doesnt load the controller in a separate one
 
 
