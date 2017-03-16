@@ -1,7 +1,11 @@
+"""
+Makes a controller library using Qt provided by PySide2 and the abstraction layer Qt.py
+imports any object you save out
+Saves and imports json files
+"""
+
 import pprint
-
 from maya import cmds
-
 import controllerLibrary
 reload(controllerLibrary)
 
@@ -30,6 +34,7 @@ class ControllerLibraryUI(QtWidgets.QDialog):
 
     def buildUI(self):
         """This method builds the UI"""
+
         #this is the master layout
         layout = QtWidgets.QVBoxLayout(self)
 
