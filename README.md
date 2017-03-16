@@ -8,7 +8,7 @@ tweenerUI.py
 Creates an animation tweener UI that will add inbetween keys.
 
 reusableUI.py
-User interface that controlls and greates gears or tweens an animation. 
+User interface that controlls and creates gears or tweens an animation. 
 
 conLibrary for Maya 2017
 -Uses Qt provided by PySide2
