@@ -48,10 +48,10 @@ class LightManager(QtWidgets.QDialog):
 
             light = func() #executes the func
 
-    def showUI(self):
-        ui = LightManager()
-        ui.show()
-        return ui
+def showUI():
+    ui = LightManager()
+    ui.show()
+    return ui
 
 
 
