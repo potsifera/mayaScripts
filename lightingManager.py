@@ -44,21 +44,25 @@ class LightManager(QtWidgets.QDialog):
         scrollArea.setWidget(scrollWidget)
         layout.addWidget(scrollArea, 1,0,1,2) #adds to row one, column 0, take one row & 2 columns
 
-        scrollWidget = QtWidgets.QWidget()
-        self.scrollLayout = QtWidgets.QVBoxLayout(scrollWidget)
 
-        scrollArea = QtWidgets.QScrollArea()
-        scrollArea.setWidgetResizable(True)
-        scrollArea.setWidget(scrollWidget)
-        layout.addWidget(scrollArea,1,0,1,2)
 
     def createLight(self):
         lightType = self.lightTypeCB.currentText()
         func = self.lightTypes[lightType]
 
         light = func() #executes the func
+        self.addLight(light)
+
+    def addLight(self,light):
         widget = LightWidget(light)
         self.scrollLayout.addWidget(widget)
+        widget.onSolo.connect(self.onSolo)
+
+    def onSolo(self,value):
+        lightWidgets = self.findChildren(LightWidget)
+        for widget in lightWidgets:
+            if widget != self.sender():
+                widget.disableLight(value)
 
 
 class LightWidget(QtWidgets.QWidget):
@@ -85,7 +89,20 @@ class LightWidget(QtWidgets.QWidget):
         soloBtn.toggled.connect(lambda val:self.onSolo.emit(val))
         layout.addWidget(soloBtn,0,1)
 
+        deleteBtn = QtWidgets.QPushButton('X')
+        deleteBtn.clicked.connect(self.deleteLight)
+        deleteBtn.setMaximumWidth(10)
+        layout.addWidget(deleteBtn,0,2)
 
+    def disableLight(self,value):
+        self.name.setChecked(not value)
+
+    def deleteLight(self):
+        self.setParent(None)
+        self.setVisible(False)
+        self.deleteLater()
+
+        pm.delete(self.light.getTransform())
 
 def showUI():
     ui = LightManager()
