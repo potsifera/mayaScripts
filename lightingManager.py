@@ -19,6 +19,17 @@ class LightManager(QtWidgets.QDialog):
         super(LightManager,self).__init__() #calls the init on QDialog
         self.setWindowTitle('lighting manager')
         self.buildUI()
+        self.populate()
+
+    def populate(self):
+        while self.scrollLayout.count():
+            widget = self.scrollLayout.takeAt(0).widget()
+            if widget:
+                widget.setVisible(False)
+                widget.deleteLater()
+        for light in pm.ls(type=["areaLight","spotLight", "pointLight", "directionalLight", "volumeLight"]):
+            self.addLight(light)
+
 
 
     def buildUI(self):
