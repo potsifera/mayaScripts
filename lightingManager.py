@@ -40,13 +40,41 @@ class LightManager(QtWidgets.QDialog):
         scrollArea = QtWidgets.QScrollArea()
         scrollArea.setWidgetResizable(True)
         scrollArea.setWidget(scrollWidget)
+        layout.addWidget(scrollArea, 1,0,1,2) #adds to row one, column 0, take one row & 2 columns
+
+        scrollWidget = QtWidgets.QWidget()
+        self.scrollLayout = QtWidgets.QVBoxLayout(scrollWidget)
+
+        scrollArea = QtWidgets.QScrollArea()
+        scrollArea.setWidgetResizable(True)
+        scrollArea.setWidget(scrollWidget)
         layout.addWidget(scrollArea,1,0,1,2)
 
     def createLight(self):
-            lightType = self.lightTypeCB.currentText()
-            func = self.lightTypes[lightType]
+        lightType = self.lightTypeCB.currentText()
+        func = self.lightTypes[lightType]
 
-            light = func() #executes the func
+        light = func() #executes the func
+        widget = LightWidget(light)
+        self.scrollLayout.addWidget(widget)
+        
+
+class LightWidget(QtWidgets.QWidget):
+
+    def __init__(self,light):
+        super(LightWidget,self).__init__()
+        if isinstance(light,basestring):
+            light = pm.PyNode(light)
+        self.light = light
+        self.buildUI()
+
+    def buildUI(self):
+        layout = QtWidgets.QGridLayout(self)
+        self.name = QtWidgets.QCheckBox(str(self.light.getTransform()))
+        self.name.setChecked(self.light.visibility.get())
+        layout.addWidget(self.name, 0,0)
+
+
 
 def showUI():
     ui = LightManager()
