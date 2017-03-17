@@ -1,6 +1,5 @@
 # mayaScripts
 
-
 gearClassCreator.py
 This is a gear controller that lets us create a gear and modify the number of teeth.
 

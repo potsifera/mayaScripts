@@ -2,7 +2,10 @@ from Qt import QtWidgets, QtCore, QtGui
 import pymel.core as pm
 from functools import partial
 
-
+"""
+Creates a light manager to manage the lights in our scene
+-Enables/Disables lights, deletes them and changes the intensity & color of the lights
+"""
 
 class LightManager(QtWidgets.QDialog):
 
