@@ -15,3 +15,8 @@ conLibrary for Maya 2017
 The library UI is flexible and supports thumbnails.
 -We can import objects that have been saved or create new ones and save them.
 -Lets save and import json data back into the UI.
+
+lightingManager.py
+-Uses pymel
+-Creates a light manager to manage the lights in our scene
+-Enables/Disables lights, deletes them and changes the intensity & color of the lights.
