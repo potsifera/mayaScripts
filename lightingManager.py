@@ -94,6 +94,13 @@ class LightWidget(QtWidgets.QWidget):
         deleteBtn.setMaximumWidth(10)
         layout.addWidget(deleteBtn,0,2)
 
+        intensity = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        intensity.setMinimum(1)
+        intensity.setMaximum(1000)
+        intensity.setValue(self.light.intensity.get())
+        intensity.valueChanged.connect(lambda val:self.light.intensity.set(val))
+        layout.addWidget(intensity,1,0,1,2)
+
     def disableLight(self,value):
         self.name.setChecked(not value)
 
