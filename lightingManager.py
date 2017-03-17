@@ -63,6 +63,8 @@ class LightManager(QtWidgets.QDialog):
 
 class LightWidget(QtWidgets.QWidget):
 
+    onSolo = QtCore.Signal(bool)
+
     def __init__(self,light):
         super(LightWidget,self).__init__()
         if isinstance(light,basestring):
@@ -77,6 +79,11 @@ class LightWidget(QtWidgets.QWidget):
         #anonymous function toggles visibility in the channel box & viewport
         self.name.toggled.connect(lambda val: self.light.getTransform().visibility.set(val))
         layout.addWidget(self.name, 0,0)
+
+        soloBtn = QtWidgets.QPushButton('Solo')
+        soloBtn.setCheckable(True)
+        soloBtn.toggled.connect(lambda val:self.onSolo.emit(val))
+        layout.addWidget(soloBtn,0,1)
 
 
 
