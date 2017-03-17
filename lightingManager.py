@@ -55,7 +55,9 @@ class LightManager(QtWidgets.QDialog):
         scrollArea.setWidget(scrollWidget)
         layout.addWidget(scrollArea, 1,0,1,2) #adds to row one, column 0, take one row & 2 columns
 
-
+        refreshBtn = QtWidgets.QPushButton('Refresh')
+        refreshBtn.clicked.connect(self.populate)
+        layout.addWidget(refreshBtn,2,1)
 
     def createLight(self):
         lightType = self.lightTypeCB.currentText()
