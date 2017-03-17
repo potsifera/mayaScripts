@@ -35,6 +35,8 @@ class LightManager(QtWidgets.QDialog):
         layout.addWidget(createBtn,0,1) #row 0, column 1
 
         scrollWidget = QtWidgets.QWidget()
+        # prevents the ui from stretching when having few lights **bug
+        #scrollWidget.setSizePolicy(QtWidgets.QSizePolicy.Maximum)
         self.scrollLayout = QtWidgets.QVBoxLayout(scrollWidget)
 
         scrollArea = QtWidgets.QScrollArea()
@@ -57,7 +59,7 @@ class LightManager(QtWidgets.QDialog):
         light = func() #executes the func
         widget = LightWidget(light)
         self.scrollLayout.addWidget(widget)
-        
+
 
 class LightWidget(QtWidgets.QWidget):
 
@@ -72,6 +74,8 @@ class LightWidget(QtWidgets.QWidget):
         layout = QtWidgets.QGridLayout(self)
         self.name = QtWidgets.QCheckBox(str(self.light.getTransform()))
         self.name.setChecked(self.light.visibility.get())
+        #anonymous function toggles visibility in the channel box & viewport
+        self.name.toggled.connect(lambda val: self.light.getTransform().visibility.set(val))
         layout.addWidget(self.name, 0,0)
 
 
